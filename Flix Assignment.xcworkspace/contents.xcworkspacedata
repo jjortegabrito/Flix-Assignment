@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:/Users/jortegabrito/Desktop/FlixAssignment/Flix Assignment/MoviesGridViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:Flix Assignment.xcodeproj">
    </FileRef>
    <FileRef

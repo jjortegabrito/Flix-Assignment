@@ -9,6 +9,8 @@ import UIKit
 import AlamofireImage
 
 class MoviesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return movies.count
     }
@@ -19,7 +21,7 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         let cell = tableView.dequeueReusableCell(withIdentifier: "MoviesCell") as! MoviesCell
         
         let movie = movies[indexPath.row]
-        let title = movie["title"] as! String
+        let title = movie["original_title"] as! String
         let synopsis = movie["overview"] as! String
         
         cell.titleLabel.text = title
@@ -27,9 +29,11 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
         
         let baseUrl = "https://image.tmdb.org/t/p/w185"
         let posterPath = movie["poster_path"] as! String
-        let posterUrl = URL(string: baseUrl + posterPath)!
+        let posterUrl = URL(string: baseUrl + posterPath)
         
-        cell.posterView.af.setImage(withURL: posterUrl)
+        cell.posterView.af.setImage(withURL: posterUrl!)
+        
+        print(baseUrl + posterPath)
         
         return cell
         
@@ -78,14 +82,24 @@ class MoviesViewController: UIViewController, UITableViewDataSource, UITableView
     
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        let cell = sender as! UITableViewCell
+        let indexPath = tableView.indexPath(for: cell)!
+        let movie = movies[indexPath.row]
+        
+        //this passes the movie variable to the new view controller
+        let detailsViewController = segue.destination as! MovieDetailsViewController
+        detailsViewController.movie = movie
+        
+        tableView.deselectRow(at: indexPath, animated: true)
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }
